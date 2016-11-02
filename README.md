@@ -1,4 +1,4 @@
-# User form page slice
+# Silverstripe Mapbox
 
 Add a Mapbox map to your Silverstripe pages. 
  
