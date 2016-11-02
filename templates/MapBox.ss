@@ -1,0 +1,1 @@
+<div id="mapbox" style="min-height: 400px"></div>

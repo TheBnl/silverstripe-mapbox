@@ -1,0 +1,19 @@
+{
+  "name": "bramdeleeuw/silverstripe-mapbox",
+  "description": "Add a mapbox to silverstripe pages",
+  "type": "silverstripe-module",
+  "keywords": ["silverstripe", "mapbox", "leaflet"],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Bram de Leeuw",
+      "email": "bram-de-leeuw@hotmai.com"
+    }
+  ],
+  "require": {
+    "silverstripe-australia/addressable": "*"
+  },
+  "extra": {
+    "installer-name": "mapbox"
+  }
+}
