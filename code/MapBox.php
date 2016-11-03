@@ -44,8 +44,8 @@
       * The icon image size, should be an array of width and height
       * MapBox
       *   icon_size:
-      *     - [width]
-      *     - [height]
+      *     width: [width]
+      *     height: [height]
       *
       * @config array
       */
@@ -56,8 +56,8 @@
       * The icon image size, should be an array with the x and y position
       * MapBox
       *   icon_anchor:
-      *     - [x]
-      *     - [y]
+      *     x: [x]
+      *     y: [y]
       *
       * @config array
       */
@@ -65,7 +65,9 @@
 
 
      public function onAfterInit() {
+
          $vars = array(
+             'MapID' => $this->mapID(),
              'MapStyle' => self::map_style(),
              'MapAccessToken' => self::access_token(),
              'Lat' => $this->getLat(),
@@ -77,12 +79,17 @@
              'IconAnchorX' => self::icon_anchor()['x'],
              'IconAnchorY' => self::icon_anchor()['y']
          );
-         
+
+         Requirements::css(MAPBOX_CSS_DIR . '/mapbox.css');
          Requirements::css(MAPBOX_JAVASCRIPT_DIR . '/thirdparty/leaflet/dist/leaflet.css');
          Requirements::javascript(MAPBOX_JAVASCRIPT_DIR . '/thirdparty/leaflet/dist/leaflet.js');
          Requirements::javascriptTemplate(MAPBOX_JAVASCRIPT_DIR . '/mapbox.js', $vars);
      }
 
+
+     public function mapID() {
+         return "mapbox-{$this->owner->ClassName}-{$this->owner->ID}";
+     }
 
      private function getLat() {
          $siteConfig = SiteConfig::current_site_config();

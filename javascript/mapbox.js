@@ -8,7 +8,7 @@
     });
 
     function initLeaflet() {
-        var map = L.map('mapbox', {
+        var map = L.map('$MapID', {
             dragging: false,
             zoomControl: false,
             scrollWheelZoom: false
