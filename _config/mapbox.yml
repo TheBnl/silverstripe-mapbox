@@ -12,10 +12,11 @@ After: 'framework/*','cms/*'
 #   style: ''
 #   # from here the settings are optional
 #   zoom: 16
-#   icon_image: ''
-#   icon_size:
-#     - width
-#     - height
-#   icon_anchor:
-#     - x
-#     - y
+#   map_options:
+#     dragging: false
+#     zoomControl: false
+#     scrollWheelZoom: false
+#     justFollowLeafletSyntax: true
+#   icon_options:
+#     iconUrl: 'path/to/icon.png'
+#     justFollowLeafletSyntax: true

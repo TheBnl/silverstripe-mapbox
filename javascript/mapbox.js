@@ -8,23 +8,15 @@
     });
 
     function initLeaflet() {
-        var map = L.map('$MapID', {
-            dragging: false,
-            zoomControl: false,
-            scrollWheelZoom: false
-        }).setView([$Lat, $Lng], $Zoom);
+        var map = L.map('$MapID', JSON.parse('$MapOptions')).setView([$Lat, $Lng], $Zoom);
 
         L.tileLayer(mapBox, {
             attribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        if ('$IconImage') {
-            var Icon = L.icon({
-                iconUrl: '$IconImage',
-                iconSize: [$IconWidth, $IconHeight],
-                iconAnchor: [$IconAnchorX, $IconAnchorY]
-            });
-
+        var iconOptions = JSON.parse('$IconOptions');
+        if (iconOptions !== null) {
+            var Icon = L.icon(JSON.parse('$IconOptions'));
             L.marker([$Lat, $Lng], {icon: Icon}).addTo(map);
         }
     }

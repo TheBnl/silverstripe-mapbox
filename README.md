@@ -32,16 +32,21 @@ SiteConfig: # Or the the page model that holds the map
 GoogleGeocoding:
   google_api_key: 'YOUR_API_KEY'
 ```
-The map can be configured to hold an icon as such:
+The map can be configured and optionally be configured to hold an icon, the sintax follows the leaflet configuration, any option that you can pass there is passable here. All set options will be combined to a json object.
 ```
 MapBox:
-  icon_image: 'path/to/the.icon'
-  icon_size:
-    width: 43
-    height: 50
-  icon_anchor:
-    x: 22
-    y: 50
+  map_options:
+    dragging: false
+    zoomControl: false
+    scrollWheelZoom: false
+  icon_options:
+    iconUrl: 'path/to/the.icon'
+    iconSize:
+      - 50
+      - 50
+    iconAnchor:
+      - 25
+      - 50
 ```
 
 ## License
