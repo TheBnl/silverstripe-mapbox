@@ -10,9 +10,6 @@
       "email": "bram-de-leeuw@hotmai.com"
     }
   ],
-  "require": {
-    "silverstripe-australia/addressable": "*"
-  },
   "extra": {
     "installer-name": "mapbox"
   }

@@ -32,6 +32,12 @@ class MapBox extends Extension
      */
     private static $zoom = 16;
 
+    /**
+     * Fit the map bounds to show all set markers
+     * @var bool
+     */
+    private static $fit_bounds_to_markers = false;
+
 
     /**
      * The Icon options
@@ -39,7 +45,7 @@ class MapBox extends Extension
      *
      * @config string
      */
-    private static $icon_options = array();
+    private static $icon_options = null;
 
 
     /**
@@ -54,23 +60,29 @@ class MapBox extends Extension
         'scrollWheelZoom' => false
     );
 
+    /**
+     * The Tile layer options
+     * Just follow the leaflet map option syntax, the options array will be json encoded
+     *
+     * @var array
+     */
+    private static $tile_layer_options = array(
+        "attribution" => "&copy; <a href=\"//www.mapbox.com/about/maps\" target=\"_blank\">Mapbox</a> &copy; <a href=\"//www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>"
+    );
+
 
     public function onAfterInit()
     {
-
         $vars = array(
             'MapID' => $this->mapID(),
-            'MapStyle' => self::map_style(),
+            'MapStyle' => Config::inst()->get('MapBox', 'style'),
             'MapAccessToken' => self::access_token(),
-
-            // todo: config options ?
-            'Lat' => $this->getLat(),
-            'Lng' => $this->getLng(),
+            'FitBounds' => (int)Config::inst()->get('MapBox', 'fit_bounds_to_markers'),
+            'Markers' => $this->getMarkers(),
             'Zoom' => $this->getZoom(),
-
-            'MapOptions' => self::map_options(),
-            'IconOptions' => self::icon_options(),
-
+            'MapOptions' => self::options_as_json('map_options'),
+            'IconOptions' => self::options_as_json('icon_options'),
+            'TileLayerOptions' => self::options_as_json('tile_layer_options'),
         );
 
         Requirements::css(MAPBOX_CSS_DIR . '/mapbox.css');
@@ -92,34 +104,6 @@ class MapBox extends Extension
 
 
     /**
-     * Get the latitude
-     *
-     * @return mixed
-     */
-    private function getLat()
-    {
-        $siteConfig = SiteConfig::current_site_config();
-        return $this->owner->getField('Lat')
-            ? $this->owner->getField('Lat')
-            : $siteConfig->getField('Lat');
-    }
-
-
-    /**
-     * Get the longitude
-     *
-     * @return mixed
-     */
-    private function getLng()
-    {
-        $siteConfig = SiteConfig::current_site_config();
-        return $this->owner->getField('Lng')
-            ? $this->owner->getField('Lng')
-            : $siteConfig->getField('Lng');
-    }
-
-
-    /**
      * Get the zoom level
      *
      * @return string
@@ -128,7 +112,7 @@ class MapBox extends Extension
     {
         return $this->owner->getField('Zoom')
             ? $this->owner->getField('Zoom')
-            : self::zoom();
+            : Config::inst()->get('MapBox', 'zoom');
     }
 
 
@@ -144,13 +128,14 @@ class MapBox extends Extension
 
 
     /**
-     * Get the map options
+     * Get options as json
      *
+     * @param $for
      * @return string
      */
-    private static function map_options()
+    private static function options_as_json($for)
     {
-        $options = Config::inst()->get('MapBox', 'map_options');
+        $options = Config::inst()->get('MapBox', $for);
         return Convert::array2json($options);
     }
 
@@ -160,31 +145,9 @@ class MapBox extends Extension
      *
      * @return string
      */
-    private static function icon_options()
+    public function getMarkers()
     {
-        $options = Config::inst()->get('MapBox', 'icon_options');
-        return Convert::array2json($options);
-    }
-
-
-    /**
-     * Get the default zoom level
-     *
-     * @return string
-     */
-    private static function zoom()
-    {
-        return Config::inst()->get('MapBox', 'zoom');
-    }
-
-
-    /**
-     * Get the map style
-     *
-     * @return string
-     */
-    private static function map_style()
-    {
-        return Config::inst()->get('MapBox', 'style');
+        $markers = $this->owner->mapBoxMarkers();
+        return Convert::array2json($markers);
     }
 }

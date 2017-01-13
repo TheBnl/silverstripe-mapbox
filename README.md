@@ -20,18 +20,6 @@ MapBox:
 ```
 
 ### Configuration
-For getting the location this module uses `silverstripe-australia/addressable` 
-you can eighter add the addressable extensions to your SiteConfig or the page that holds your map e.g. the HomePage.
-Make sure to configure the Google Geocoding api key, otherwise the Geocodable class is not able to retrieve a valid location point from the given address.
-```
-SiteConfig: # Or the the page model that holds the map
-  extensions:
-    - Addressable
-    - Geocodable
- 
-GoogleGeocoding:
-  google_api_key: 'YOUR_API_KEY'
-```
 The map can be configured and optionally be configured to hold an icon, the sintax follows the leaflet configuration, any option that you can pass there is passable here. All set options will be combined to a json object.
 ```
 MapBox:
@@ -48,6 +36,9 @@ MapBox:
       - 25
       - 50
 ```
+To center the map to a location you need to add the method `mapBoxMarkers()` to the model that holds the MapBox extension. This method needs to return an array with at least one location to center the map on. If using multiple markers you can set the config setting `fit_bounds_to_markers` to true so all markers will be displayed on the map. 
+
+A interface is available for models that use the extension, just add `implements UseMapBox` to your class to force the method. 
 
 ## License
 
