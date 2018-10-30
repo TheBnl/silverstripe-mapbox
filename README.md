@@ -5,16 +5,16 @@ Add a Mapbox map to your Silverstripe pages.
 ### Instalation
 Simply install the moduel by requireing it in you composer.json or by running:
 ```
-composer require "bramdeleeuw/silverstripe-mapbox"
+composer require "xddesigners/silverstripe-mapbox"
 ```
 
 Then add the controller extension to the page you want the map to show and configure the basic properties:
 ```
-HomePage_controller:
+HomePagecontroller:
   extensions:
-    - MapBox
+    - XD\MapBox\MapBox
     
-MapBox:
+XD\MapBox\MapBox:
   access_token: 'YOUR_MAPBOX_ACCESS_TOKEN'
   style: 'YOUR_MAPBOX_STYLE'
 ```
@@ -22,7 +22,7 @@ MapBox:
 ### Configuration
 The map can be configured and optionally be configured to hold an icon, the sintax follows the leaflet configuration, any option that you can pass there is passable here. All set options will be combined to a json object.
 ```
-MapBox:
+XD\MapBox\MapBox:
   map_options:
     dragging: false
     zoomControl: false
@@ -42,7 +42,7 @@ A interface is available for models that use the extension, just add `implements
 
 ## License
 
-Copyright (c) 2016, Bram de Leeuw
+Copyright (c) 2016, XD designers
 All rights reserved.
 
 All rights reserved.

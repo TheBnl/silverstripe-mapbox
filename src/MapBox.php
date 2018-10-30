@@ -1,13 +1,21 @@
 <?php
 
+namespace XD\MapBox;
+
+use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Convert;
+use SilverStripe\Core\Extension;
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
+use SilverStripe\View\Requirements;
+
 /**
- * MapBox.php
- *
+ * Class MapBox
+ * @package XD\MapBox
  * @author Bram de Leeuw
- * Date: 02/11/16
  */
 class MapBox extends Extension
 {
+    use Configurable;
 
     /**
      * The map style to use
@@ -16,14 +24,12 @@ class MapBox extends Extension
      */
     private static $style = null;
 
-
     /**
      * The map box access token
      *
      * @config string
      */
     private static $access_token = null;
-
 
     /**
      * The map box zoom level
@@ -38,7 +44,6 @@ class MapBox extends Extension
      */
     private static $fit_bounds_to_markers = false;
 
-
     /**
      * The Icon options
      * Just follow the leaflet icon option syntax, the options array will be json encoded
@@ -46,7 +51,6 @@ class MapBox extends Extension
      * @config string
      */
     private static $icon_options = null;
-
 
     /**
      * The Map options
@@ -67,17 +71,16 @@ class MapBox extends Extension
      * @var array
      */
     private static $tile_layer_options = array(
-        "attribution" => "&copy; <a href=\"//www.mapbox.com/about/maps\" target=\"_blank\">Mapbox</a> &copy; <a href=\"//www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>"
+        'attribution' => "&copy; <a href=\"//www.mapbox.com/about/maps\" target=\"_blank\">Mapbox</a> &copy; <a href=\"//www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>"
     );
-
 
     public function onAfterInit()
     {
         $vars = array(
             'MapID' => $this->mapID(),
-            'MapStyle' => Config::inst()->get('MapBox', 'style'),
+            'MapStyle' => self::config()->get('style'),
             'MapAccessToken' => self::access_token(),
-            'FitBounds' => (int)Config::inst()->get('MapBox', 'fit_bounds_to_markers'),
+            'FitBounds' => (int)self::config()->get('fit_bounds_to_markers'),
             'Markers' => $this->getMarkers(),
             'Zoom' => $this->getZoom(),
             'MapOptions' => self::options_as_json('map_options'),
@@ -85,12 +88,11 @@ class MapBox extends Extension
             'TileLayerOptions' => self::options_as_json('tile_layer_options'),
         );
 
-        Requirements::css(MAPBOX_CSS_DIR . '/mapbox.css');
-        Requirements::css(MAPBOX_JAVASCRIPT_DIR . '/thirdparty/leaflet/dist/leaflet.css');
-        Requirements::javascript(MAPBOX_JAVASCRIPT_DIR . '/thirdparty/leaflet/dist/leaflet.js');
-        Requirements::javascriptTemplate(MAPBOX_JAVASCRIPT_DIR . '/mapbox.js', $vars);
+        Requirements::css(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/css/mapbox.css'));
+        Requirements::css(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/javascript/thirdparty/leaflet/dist/leaflet.css'));
+        Requirements::javascript(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/javascript/thirdparty/leaflet/dist/leaflet.js'));
+        Requirements::javascriptTemplate(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/javascript/mapbox.js'), $vars);
     }
-
 
     /**
      * Create a map ID
@@ -99,9 +101,8 @@ class MapBox extends Extension
      */
     public function mapID()
     {
-        return "mapbox-{$this->owner->ClassName}-{$this->owner->ID}";
+        return "mapbox-{$this->owner->ID}";
     }
-
 
     /**
      * Get the zoom level
@@ -112,9 +113,8 @@ class MapBox extends Extension
     {
         return $this->owner->getField('Zoom')
             ? $this->owner->getField('Zoom')
-            : Config::inst()->get('MapBox', 'zoom');
+            : self::config()->get('zoom');
     }
-
 
     /**
      * Get the access token
@@ -123,9 +123,8 @@ class MapBox extends Extension
      */
     private static function access_token()
     {
-        return Config::inst()->get('MapBox', 'access_token');
+        return self::config()->get('access_token');
     }
-
 
     /**
      * Get options as json
@@ -135,10 +134,9 @@ class MapBox extends Extension
      */
     private static function options_as_json($for)
     {
-        $options = Config::inst()->get('MapBox', $for);
+        $options = self::config()->get($for);
         return Convert::array2json($options);
     }
-
 
     /**
      * Get the icon options

@@ -1,16 +1,26 @@
 {
-  "name": "bramdeleeuw/silverstripe-mapbox",
+  "name": "xddesigners/silverstripe-mapbox",
   "description": "Add a mapbox to silverstripe pages",
-  "type": "silverstripe-module",
+  "type": "silverstripe-vendormodule",
   "keywords": ["silverstripe", "mapbox", "leaflet"],
   "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "Bram de Leeuw",
-      "email": "bram-de-leeuw@hotmai.com"
+      "email": "bram@xd.nl"
     }
   ],
   "extra": {
-    "installer-name": "mapbox"
+    "expose": [
+      "client"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "XD\\MapBox\\": "src"
+    }
+  },
+  "replace": {
+    "bramdeleeuw/silverstripe-mapbox": "self.version"
   }
 }

@@ -1,12 +1,12 @@
 <?php
-/**
- * UseMapBox.php
- *
- * @author Bram de Leeuw
- * Date: 13/01/17
- */
- 
 
+namespace XD\MapBox;
+
+/**
+ * Interface UseMapBox
+ * @package XD\MapBox
+ * @author Bram de Leeuw
+ */
 interface UseMapBox {
 
     /**

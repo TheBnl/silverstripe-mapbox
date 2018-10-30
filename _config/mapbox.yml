@@ -1,13 +1,12 @@
 ---
 Name: mapbox
-After: 'framework/*','cms/*'
 ---
 # This module requires the use of googles geocoding api set this value in your config file
-# GoogleGeocoding:
-#  google_api_key: {your_google_server_api_key}
+# Symbiote\Addressable\GeocodeService:
+#   google_api_key: 'AIzaSyCnzIi4iD9Ui4pYRdlFB1VhNnZQJk9HbVA'
 
 # example map box config
-# MapBox:
+# XD\MapBox\MapBox:
 #   access_token: ''
 #   style: ''
 #   # from here the settings are optional
