@@ -1,1 +1,0 @@
-<div id="$mapID" class="map-box"></div>
