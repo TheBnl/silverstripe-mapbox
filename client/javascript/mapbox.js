@@ -19,9 +19,23 @@
             var markerBounds = [];
             markers.forEach(function (marker) {
                 var m = L.marker([marker.Lat, marker.Lng]);
+
+                // Check if iconOptions are set and use
                 if (iconOptions !== null) {
                     m.setIcon(L.icon(iconOptions));
                 }
+
+                // Check if the marker has a Link and open it
+                if (marker.Link) {
+                    m.on('click', function() {
+                        if (marker.Target) {
+                            window.open(marker.Link, marker.Target);
+                        } else {
+                            window.open(marker.Link);
+                        }
+                    });
+                }
+
                 m.addTo(map);
                 markerBounds.push(m);
                 map.setView([marker.Lat, marker.Lng], $Zoom);
