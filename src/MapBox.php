@@ -91,7 +91,7 @@ class MapBox extends Extension
         Requirements::css(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/css/mapbox.css'));
         Requirements::css(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/javascript/thirdparty/leaflet/dist/leaflet.css'));
         Requirements::javascript(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/javascript/thirdparty/leaflet/dist/leaflet.js'));
-        Requirements::javascriptTemplate(ModuleResourceLoader::resourceURL('xddesigners/silverstripe-mapbox:client/javascript/mapbox.js'), $vars);
+        Requirements::javascriptTemplate(ModuleResourceLoader::resourceURL('/vendor/xddesigners/silverstripe-mapbox/client/javascript/mapbox.js'), $vars);
     }
 
     /**
